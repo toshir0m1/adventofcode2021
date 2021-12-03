@@ -1,8 +1,8 @@
-donnees = open('inputs/input_day2.txt').read()
+data = open('inputs/input_day2.txt').read()
 
 horizontal = 0
 depth = 0
-values = donnees.split('\n')
+values = data.split('\n')
 for i in range(len(values)):
   order = values[i].split(' ')
   direction = order[0]
