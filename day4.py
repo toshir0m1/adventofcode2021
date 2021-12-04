@@ -38,6 +38,8 @@ def checkBoard(board, n):
   return False
 
 def checkVictory(board):
+  if board in winners:
+    return False
   for y in range(len(boards[board])):
     if scores[board][y] == [True, True, True, True, True]:
       return True
@@ -66,6 +68,7 @@ def countUnmarked(board):
         sum += boards[board][y][x]
   return sum
 
+winners = list()
 over = False
 for draw in range(len(stack)):
   print('Next number : ' + str(stack[draw]))
@@ -73,14 +76,17 @@ for draw in range(len(stack)):
     check = checkBoard(candidate, stack[draw])
     if check == True:
       print('Board number ' + str(candidate) + ' HAS WON!')
-      viewB(candidate)
-      viewS(candidate)
-      unmarked = countUnmarked(candidate)
-      solution = unmarked * stack[draw]
-      print('Solution = (sum of unmarked)(' + str(unmarked) + ') * (last number called)(' + str(stack[draw]) + ') = ' + str(solution))
-      over = True
-      break
-    #else:
-      #print('Board number ' + str(candidate) + ' has not won yet')
+      lastWinner = candidate
+      lastDraw = stack[draw]
+      winners.append(candidate)
+      if len(winners) == len(boards):
+        over = True
+        break
   if over == True:
     break
+      
+viewB(lastWinner)
+viewS(lastWinner)
+unmarked = countUnmarked(lastWinner)
+solution = unmarked * lastDraw
+print('Solution = (sum of unmarked)(' + str(unmarked) + ') * (last number called)(' + str(stack[draw]) + ') = ' + str(solution))
