@@ -15,22 +15,36 @@ def mark(x, y):
 
 def markGrid(x1, y1, x2, y2):
     mark(x1, y1)
+    if y1 == y2:
+        if x1 < x2:
+            for x in range(x2 - x1):
+                mark(x1 + x + 1, y1)
+        if x1 > x2:
+            for x in range(x1 - x2):
+                mark(x2 + x, y1)
+        return
+    if x1 == x2:
+        if y1 < y2:
+            for y in range(y2 - y1):
+                mark(x1, y1 + y + 1)
+        if y1 > y2:
+            for y in range(y1 - y2):
+                mark(x1, y2 + y)
+        return
     if x1 < x2:
-        for x in range(x2 - x1):
-            mark(x1 + x + 1, y1)
+        if y1 < y2:
+            for x in range(x2 - x1):
+                mark(x1 + x + 1, y1 + x + 1)
+        if y1 > y2:
+            for x in range(x2 - x1):
+                mark(x1 + x + 1, y1 - x - 1)
     if x1 > x2:
-        for x in range(x1 - x2):
-            mark(x2 + x, y1)
-    if y1 < y2:
-        for y in range(y2 - y1):
-            mark(x1, y1 + y + 1)
-    if y1 > y2:
-        for y in range(y1 - y2):
-            mark(x1, y2 + y)
-
-def seeG():
-    for y in range(scale):
-        print(grid[y])
+        if y1 < y2:
+            for x in range(x1 - x2):
+                mark(x1 - x - 1, y1 + x + 1)
+        if y1 > y2:
+            for x in range(x1 - x2):
+                mark(x1 - x - 1, y1 - x - 1)
 
 # mark vents on grid
 for line in range(len(vents)):
@@ -41,16 +55,12 @@ for line in range(len(vents)):
     y1 = int(p1[1])
     x2 = int(p2[0])
     y2 = int(p2[1])
-    if x1 == x2 or y1 == y2:
-        markGrid(x1, y1, x2, y2)
+    markGrid(x1, y1, x2, y2)
 
 # count overlap
-def countOverlap():
-    overlap = 0
-    for y in range(scale):
-        for x in range(scale):
-            if grid[y][x] > 1:
-                overlap += 1
-    return overlap
-
-print(countOverlap())
+overlap = 0
+for y in range(scale):
+    for x in range(scale):
+        if grid[y][x] > 1:
+            overlap += 1
+print(overlap)
