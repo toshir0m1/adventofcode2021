@@ -6,6 +6,7 @@ THRESHOLD = 9
 STEPS = 100
 step = 0
 flashes = 0
+stepFlashes = 0
 
 flashMap = list()
 for line in range(SIZE):
@@ -19,8 +20,9 @@ def resetFlash():
     flashMap.append([False] * SIZE)
   
 def step1():
-  global grid, flashMap, flashMapOff, step
+  global grid, flashMap, flashMapOff, step, stepFlashes
   step += 1
+  stepFlashes = 0
   #print('Step ' + str(step))
   for line in range(SIZE):
     for col in range(SIZE):
@@ -37,9 +39,10 @@ def power(y, x):
     flash(y, x)
 
 def flash(y, x):
-  global flashes, flashMap
+  global flashes, flashMap, stepFlashes
   flashMap[y][x] = True
   flashes += 1
+  stepFlashes += 1
   for yy in range(-1, 2):
     for xx in range(-1, 2):
       if (y + yy) >= 0 and (y + yy) < SIZE and (x + xx) >= 0 and (x + xx) < SIZE:
@@ -52,7 +55,7 @@ def show():
     print(line)
   print('flashes = ' + str(flashes))
 
-for s in range(STEPS):
+while stepFlashes < 100:
   step1()
-print(flashes)
+print(step)
 
