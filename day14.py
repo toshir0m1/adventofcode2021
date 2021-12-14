@@ -1,4 +1,4 @@
-data = open('inputs/input_day14.txt').read()
+data = open('inputs/input_day14bis.txt').read()
 sections = data.split('\n\n')
 polymer = list(sections[0])
 rulesLines = sections[1].splitlines()
@@ -22,8 +22,9 @@ def evolve():
     if pair in rules:
       polymer.insert(pos+1, rules[pair])
 
-STEPS = 10
+STEPS = 15
 for step in range(STEPS):
+  print(step)
   evolve()
 nMin = 99999999
 nMax = -1
