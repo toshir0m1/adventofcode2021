@@ -1,6 +1,18 @@
 data = open('inputs/input_day14bis.txt').read()
 sections = data.split('\n\n')
-polymer = list(sections[0])
+polymerSize = len(sections[0])
+print(polymerSize)
+
+def step(n):
+  global polymerSize
+  return n + (n-1)
+
+STEPS = 40
+for x in range(STEPS):
+  polymerSize = step(polymerSize)
+  print(polymerSize)
+
+'''
 rulesLines = sections[1].splitlines()
 
 inventory = {}
@@ -36,3 +48,4 @@ for item in inventory:
   if n < nMin:
     nMin = n
 print(nMax-nMin)
+'''
