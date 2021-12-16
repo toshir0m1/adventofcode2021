@@ -6,7 +6,7 @@ for row in range(len(maze)):
 
 MAX_X = len(maze[0]) - 1
 MAX_Y = len(maze) - 1
-minRisk = 999999999999
+minRisk = 778
 aborts = 0
 paths = 0
 
