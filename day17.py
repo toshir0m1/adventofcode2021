@@ -1,12 +1,28 @@
-'''
-#XMIN = 20
-#XMAX = 30
-#YMAX = -5
-#YMIN = -10
 XMIN = 235
 XMAX = 259
 YMAX = -62
 YMIN = -118
+
+def findVelY(velocityX):
+    velocities = list()
+    for candidate in range(YMIN, 250):
+        nextCandidate = False
+        velY = candidate
+        velX = velocityX
+        posX = 0
+        posY = 0
+        while posY >= YMIN:
+            posY += velY
+            velY -= 1
+            posX += velX
+            velX = drag(velX)
+            if posX >= XMIN and posX <= XMAX and posY <= YMAX and posY >= YMIN:
+                velocities.append([velocityX, candidate])
+                nextCandidate = True
+                break
+        if nextCandidate:
+            continue
+    return velocities
 
 def drag(x):
     if x > 0:
@@ -14,37 +30,27 @@ def drag(x):
     elif x < 0:
         x += 1
     return x
-'''
 
-# found part 1 result by trying around in console mode :
-# print('Max Y = ' + str(findVelY(117)))
-def findVelY(startingVelocity):
-    positions = [0]
-    velY = startingVelocity
-    while positions[-1] > YMAX:
-        positions.append(positions[-1]+velY)
-        print(positions[-1])
-        velY -= 1
-    if positions[-1] >= YMIN:
-        return max(positions)
-    return False
-
-'''
 def findVelX():
     candidates = list()
-    for candidate in range(XMAX//2):
+    for candidate in range(XMAX+1):
         nextCandidate = False
         posX = 0
         velX = candidate
-        while nextCandidate == False:
+        while nextCandidate == False and velX != 0:
             posX += velX
             velX = drag(velX)
-            if velX == 0:
-                if posX >= XMIN and posX <= XMAX:
-                    candidates.append(candidate)
+            if posX >= XMIN and posX <= XMAX:
+                candidates.append(candidate)
                 nextCandidate = True
     return candidates
 
-#possibleX = findVelX()
-#print(possibleX)
-'''
+possibleX = findVelX()
+
+hits = list()
+for x in possibleX:
+    hitsForX = findVelY(x)
+    hits.extend(hitsForX)
+
+print(len(hits))
+
